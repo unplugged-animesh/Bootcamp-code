@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login</title>
+</head>
+
+<body>
+    <div class="my-box">
+        <h1>Grocery-Store Login</h1>
+        <div class="west">
+            {% if error_message %}
+            <div class="error">{{ error_message }}</div>
+            {% set error_message = None %}
+            {% endif %}
+        </div>
+        <form method="POST" action="{{ url_for('login') }}">
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div>
+                <input type="submit" value="Login">
+            </div>
+        </form>
+        <p>Don't have an account? <a href="{{ url_for('signup') }}">Signup</a></p>
+    </div>
+</body>
+
+</html>
+
+
+  
+
