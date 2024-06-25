@@ -19,8 +19,42 @@
             <div class="category">
                 <h3 class="category-name">{{ category.name }}</h3>
                 <div class="category-actions">
-                    <a href="{{url_for('edit_category',curr_login_id=data.curr_login_id,category_id=category.id) }}" class="edit-category-btn">Edit</a>
-                    <a href="{{url_for('remove_category',curr_login_id=data.curr_login_id,category_id=category.id) }}" class="remove-category-btn">Remove</a>
+                    <a href="{{ url_for('edit_category', curr_login_id=data.curr_login_id, category_id=category.id) }}"
+                        class="edit-category-btn">Edit</a>
+                    <a  href="{{ url_for('remove_category', curr_login_id=data.curr_login_id, category_id=category.id) }}"
+                        class="remove-category-btn">Remove</a>
+                    <a href ="{{ url_for('create_product',curr_login_id=data.curr_login_id,category_id=category.id)}}"
+                    class="create-prod-btn">Add Product</a>    
+                </div>
+                <table class='product_table'>
+                    <tr>
+                        <th>Product</th>
+                        <th>Rate ₹</th>
+                        <th>Quantity</th>
+                        <th>Unit</th>
+                        <th>Mf Date</th>
+                        <th>Expiry Date</th>
+                        <th>Action</th>
+                    </tr>
+                    {% for product in category.products %}    
+                    <tr>
+                        <td class='product-name'>{{product.name}}</td>
+                        <td class='product-price'>{{product.price}}</td>
+                        <td class='product-quantity'>{{product.qunatity}}</td>
+                        <td class='product-unit'>{{product.unit}}</td>
+                        <td class='product-mf_date'>{{product.mf_date}}</td>
+                        <td class='product-expiry_date'>{{product.expiry_date}}</td>
+
+                    <td>
+                        <a href="{{ url_for('edit_product', curr_login_id=data.curr_login_id, product_id=product.id) }}"
+                        class="edit-prod-btn">Edit</a>
+                        <a href="{{ url_for('remove_product', curr_login_id=data.curr_login_id, product_id=product.id) }}"
+                        class="edit-category-btn">Remove</a> 
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+
             </div>
             {% endfor %}
         </div>
