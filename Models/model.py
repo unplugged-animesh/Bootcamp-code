@@ -36,6 +36,7 @@ class Cart(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     cart_count = db.Column(db.Integer, default=0, nullable=False)
     items = db.relationship("CartItem", backref="Cart",cascade='all, delete-orphan')
+    
 
 
 class CartItem(db.Model):

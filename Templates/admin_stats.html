@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Admin Statistics</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="box">
+        <div class="logout">
+            <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+        </div>
+        <h1>Hi {{name}}! Here are the statistics</h1>
+        <div class="section">
+            <h2>Category Wise Statistics</h2>
+            <canvas id="categoryStatsChart"></canvas>
+            <script>
+                var ctx = document.getElementById('categoryStatsChart').getContext('2d');
+                var categoryStats = {{ data.category_stats | tojson }};
+                var categoryNames = categoryStats.map(stat => stat.name);
+                var productCounts = categoryStats.map(stat => stat.product_count);
+                var totalQuantities = categoryStats.map(stat => stat.total_quantity);
+
+                var chart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: categoryNames,
+                        datasets: [{
+                            label: 'Number of Products',
+                            data: productCounts,
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }, {
+                            label: 'Total Quantity',
+                            data: totalQuantities,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            </script>
+        </div>
+    </div>
+</body>
+
+</html>
