@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Search Results</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="back">
+            <a href="{{ url_for('customer_dashboard', curr_login_id=curr_login_id) }}" class="back-btn">Home</a>
+        </div>
+        <div class="logout">
+            <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+        </div>
+        <h1>Search Results for "{{ search_query }}"</h1>
+        {% if products %}
+        <div class="product-list">
+            {% for product in products %}
+            <div class="product">
+                <h3 class="product-name">Product{{ product.name }}</h3>
+                <p class="product-rate">Rate: {{ product.price }} ₹</p>
+                <p class="product-quantity">Quantity: {{ product.quantity }}</p>
+                <p class="product-unit">Unit: {{ product.unit }}</p>
+                <p class="product-mf-date">Mf Date: {{ product.mf_date }}</p>
+                <p class="product-expiry-date">Expiry Date: {{ product.expiry_date }}</p>
+                <form method="POST"
+                    action="{{ url_for('customer_add_to_cart', curr_login_id=curr_login_id, product_id=product.id) }}">
+                    <input type="number" name="quantity" value="1" min="1" max="{{ product.quantity }}">
+                    <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% if categories %}
+        <div class="category-list">
+            {% for category in categories %}
+            <div class="category">
+                <h3 class="category-name">{{ category.name }}</h3>
+                <div class="category-products">
+                    {% for product in category.products %}
+                    <div class="product">
+                        <h3 class="product-name">{{ product.name }}</h3>
+                        <p class="product-rate">Rate: {{ product.price }} ₹</p>
+                        <p class="product-quantity">Quantity: {{ product.quantity }}</p>
+                        <p class="product-unit">Unit: {{ product.unit }}</p>
+                        <p class="product-mf-date">Mf Date: {{ product.mf_date }}</p>
+                        <p class="product-expiry-date">Expiry Date: {{ product.expiry_date }}</p>
+                        <form method="POST"
+                            action="{{ url_for('customer_add_to_cart', curr_login_id=curr_login_id, product_id=product.id) }}">
+                            <input type="number" name="quantity" value="1" min="1" max="{{ product.quantity }}">
+                            <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+                        </form>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if not products and not categories %}
+        <p class="no-results">No results found.</p>
+        {% endif %}
+    </div>

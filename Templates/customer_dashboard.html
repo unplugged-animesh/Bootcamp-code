@@ -3,6 +3,7 @@
 
 <head>
     <title>Customer Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='customer_db.css') }}">
 </head>
 
 <body>
@@ -16,6 +17,9 @@
         </div>
         <div class="section">
             <h2>Categories</h2>
+            <form method="POST" action="{{ url_for('search', curr_login_id=data.curr_login_id) }}" class="search-form">
+                <input type="text" name="search" placeholder="Search for products">
+                <button type="submit" class="search-btn">Search</button>
             </form>
             {% for category, pdts in data.cart.items() %}
             <div class="category">
